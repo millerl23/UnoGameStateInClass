@@ -4,16 +4,29 @@ public class Card {
 
     private int cardID; // 0-9 for ints, 10 = skip, 11 = reverse,
                         // 12 = +2, 13 = wild, 14 = wild+4
-    private CardColor color;
+                        // Change to enum called Face
+    private Color color;
 
-    public Card(int ID, CardColor _color){
+    public Card(int ID, Color _color){
         cardID = ID;
         color = _color;
     }
 
-    public enum CardColor
+    public enum Color
     {
-        RED,BLUE,GREEN,YELLOW,BLACK
+
+        RED(0),BLUE(1),GREEN(2),YELLOW(3),BLACK(4);
+        private int colorID;
+
+        Color(int ID){
+            this.colorID = ID;
+        }
+
+        public void setColorID(int colorID) {
+            this.colorID = colorID;
+        }
+
+
     }
 /*
     public enum CardType

@@ -21,11 +21,33 @@ public class UnoGameState {
       playerHands.add(2, hand2);
       playerHands.add(3, hand3);
 
-      playerHands.get(0).add(0, new Card(0,Card.CardColor.RED));
+      generateHand(playerHands.get(0));
+      playerHands.get(0).add(0, new Card(0,Card.Color.RED));
+        playerHands.get(0).add(0, new Card(5,Card.Color.BLUE));
+        playerHands.get(0).add(0, new Card(10,Card.Color.GREEN));
+        playerHands.get(0).add(0, new Card(11,Card.Color.RED));
+        playerHands.get(0).add(0, new Card(14,Card.Color.BLACK));
+        playerHands.get(0).add(0, new Card(6,Card.Color.YELLOW));
+        playerHands.get(0).add(0, new Card(7,Card.Color.GREEN));
     }
 
 
-    
+    private void generateHand(ArrayList<Card> cards)
+    {
+        for ( Card.Color c : Card.Color.values()){
+            for ( Card.Face f : Card.Face.values()){
+                cards.add(new Card(c, ));
+                card.face
+            }
+
+
+        }
+
+
+
+    }
+
+
     public enum PlayDirection
     {
         CW,CCW
