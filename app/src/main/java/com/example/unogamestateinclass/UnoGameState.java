@@ -1,8 +1,13 @@
 package com.example.unogamestateinclass;
 
+import android.media.metrics.PlaybackErrorEvent;
+
 import java.util.ArrayList;
 
 public class UnoGameState {
+
+    private int turn; //index of player whose turn it is
+    private PlayDirection direction;
 
     private ArrayList<ArrayList<Card>> playerHands;
     private ArrayList<Card> playedCards;
@@ -16,6 +21,9 @@ public class UnoGameState {
 
 
     public UnoGameState() {
+      turn = 0;
+      direction = PlayDirection.CW;
+
       playerHands.add(0, hand0);
       playerHands.add(1, hand1);
       playerHands.add(2, hand2);
@@ -50,7 +58,13 @@ public class UnoGameState {
 
     public enum PlayDirection
     {
-        CW,CCW
+        CW (1), CCW (-1);
+
+        private int direction;
+
+        PlayDirection(int direction) {
+            this.direction = direction;
+        }
     }
     // for each player
         // card in hand
