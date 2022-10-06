@@ -3,7 +3,6 @@ package com.example.unogamestateinclass;
 import android.media.metrics.PlaybackErrorEvent;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class UnoGameState {
 
@@ -69,9 +68,16 @@ public class UnoGameState {
         return cards;
     }
 
-    private ArrayList<Card> generatePlayerHands()
+    // Parameters
+    // fromStack: the origin of the card that is moving
+    // from: the card that is moving
+    // to: the place the card is going to
+    private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
     {
-        Random numberOfCards = new Random();
+        to.add(from);
+        fromStack.remove(from);
+    }
+
 
         if(drawDeck.size() >= 7 * playerHands.size())
         {
