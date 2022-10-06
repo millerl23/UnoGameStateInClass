@@ -24,6 +24,8 @@ public class UnoGameState {
         // Initialize
       turn = 0;
       direction = PlayDirection.CW;
+      drawDeck = generateDeck();
+
 
       playerHands.add(0, hand0);
       playerHands.add(1, hand1);
@@ -43,8 +45,9 @@ public class UnoGameState {
 
 
 
-    private void generateDeck(ArrayList<Card> cards) // This will actually generate a card of each type of face
+    private ArrayList<Card> generateDeck() // This will actually generate a card of each type of face
     {
+        ArrayList<Card> cards = new ArrayList<>();
         for ( Card.Color c : Card.Color.values()){
             for ( Card.Face f : Card.Face.values()){
                 if (c == Card.Color.BLACK) {
@@ -62,6 +65,7 @@ public class UnoGameState {
                 }
             }
         }
+        return cards;
     }
 
 
