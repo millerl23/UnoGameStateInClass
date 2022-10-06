@@ -3,6 +3,7 @@ package com.example.unogamestateinclass;
 import android.media.metrics.PlaybackErrorEvent;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class UnoGameState {
 
@@ -68,7 +69,28 @@ public class UnoGameState {
         return cards;
     }
 
+    private ArrayList<Card> generatePlayerHands()
+    {
+        Random numberOfCards = new Random();
 
+        if(drawDeck.size() >= 7 * playerHands.size())
+        {
+            for(int i=0; i < 7; i++)
+            {
+                for(int j=0; j < playerHands.size(); j++)
+                {
+                    drawCardFromDeck(playerHands.get(j));
+                }
+            }
+        }
+    }
+
+    private void drawCardFromDeck(ArrayList<Card> to)
+    {
+        Card nextCard = drawDeck.get(0);
+        to.add(nextCard);
+        drawDeck.remove(nextCard);
+    }
     public enum PlayDirection
     {
         CW (1), CCW (-1);
