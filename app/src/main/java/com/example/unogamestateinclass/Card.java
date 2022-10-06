@@ -6,10 +6,11 @@ public class Card {
                         // 12 = +2, 13 = wild, 14 = wild+4
                         // Change to enum called Face
     private Color color;
+    private Face face;
 
-    public Card(int ID, Color _color){
-        cardID = ID;
+    public Card(Color _color, Face _face){
         color = _color;
+        face = _face;
     }
 
     public enum Face //

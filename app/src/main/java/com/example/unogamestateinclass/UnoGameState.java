@@ -31,29 +31,37 @@ public class UnoGameState {
       playerHands.add(3, hand3);
 
       //generateHand(playerHands.get(0));
-      playerHands.get(0).add(0, new Card(0,Card.Color.RED));
+     /* playerHands.get(0).add(0, new Card(0,Card.Color.RED));
         playerHands.get(0).add(0, new Card(5,Card.Color.BLUE));
         playerHands.get(0).add(0, new Card(10,Card.Color.GREEN));
         playerHands.get(0).add(0, new Card(11,Card.Color.RED));
         playerHands.get(0).add(0, new Card(14,Card.Color.BLACK));
         playerHands.get(0).add(0, new Card(6,Card.Color.YELLOW));
         playerHands.get(0).add(0, new Card(7,Card.Color.GREEN));
+    */
     }
+
 
 
     private void generateDeck(ArrayList<Card> cards) // This will actually generate a card of each type of face
     {
         for ( Card.Color c : Card.Color.values()){
             for ( Card.Face f : Card.Face.values()){
-                cards.add(new Card(c, ));
-                card.face
+                if (c == Card.Color.BLACK) {
+                    if(f == Card.Face.WILD || f == Card.Face.DRAWFOUR) {
+                        for ( int i = 0; i < 4; i++) {
+                            cards.add(new Card(c, f));
+                        }
+                    }
+                }
+                else {
+                    cards.add(new Card(c, f));
+                    if ( f!= Card.Face.ZERO){
+                        cards.add(new Card(c, f));
+                    }
+                }
             }
-
-
         }
-
-
-
     }
 
 
