@@ -68,6 +68,16 @@ public class UnoGameState {
         return cards;
     }
 
+    // Parameters
+    // fromStack: the origin of the card that is moving
+    // from: the card that is moving
+    // to: the place the card is going to
+    private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
+    {
+        to.add(from);
+        fromStack.remove(from);
+    }
+
 
     public enum PlayDirection
     {
