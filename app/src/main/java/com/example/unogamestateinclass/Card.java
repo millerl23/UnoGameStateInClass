@@ -12,20 +12,26 @@ public class Card {
         color = _color;
     }
 
+    public enum Face //
+    {
+        ZERO,ONE,TWO,THREE,FOUR,FIVE,SIX,SEVEN,EIGHT,NINE,REVERSE,SKIP,DRAWTWO,DRAWFOUR,WILD
+
+    }
+
     public enum Color
     {
 
         RED(0),BLUE(1),GREEN(2),YELLOW(3),BLACK(4);
-        private int colorID;
+       private int colorID;
 
         Color(int ID){
             this.colorID = ID;
         }
-
+/*
         public void setColorID(int colorID) {
             this.colorID = colorID;
         }
-
+*/
 
     }
 /*
