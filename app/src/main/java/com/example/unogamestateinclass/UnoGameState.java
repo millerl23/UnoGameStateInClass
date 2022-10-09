@@ -3,6 +3,7 @@ package com.example.unogamestateinclass;
 import android.media.metrics.PlaybackErrorEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class UnoGameState {
 
@@ -22,25 +23,28 @@ public class UnoGameState {
 
     public UnoGameState() {
         // Initialize
-      turn = 0;
-      direction = PlayDirection.CW;
-      drawDeck = generateDeck();
+        turn = 0;
+        direction = PlayDirection.CW;
+        drawDeck = generateDeck();
+        playedCards = new ArrayList<Card>();
 
+        playerHands.add(0, hand0);
+        playerHands.add(1, hand1);
+        playerHands.add(2, hand2);
+        playerHands.add(3, hand3);
 
-      playerHands.add(0, hand0);
-      playerHands.add(1, hand1);
-      playerHands.add(2, hand2);
-      playerHands.add(3, hand3);
+        Collections.shuffle(drawDeck);
 
-      //generateHand(playerHands.get(0));
-     /* playerHands.get(0).add(0, new Card(0,Card.Color.RED));
+        initializePlayerHands();
+        //generateHand(playerHands.get(0));
+        /* playerHands.get(0).add(0, new Card(0,Card.Color.RED));
         playerHands.get(0).add(0, new Card(5,Card.Color.BLUE));
         playerHands.get(0).add(0, new Card(10,Card.Color.GREEN));
         playerHands.get(0).add(0, new Card(11,Card.Color.RED));
         playerHands.get(0).add(0, new Card(14,Card.Color.BLACK));
         playerHands.get(0).add(0, new Card(6,Card.Color.YELLOW));
         playerHands.get(0).add(0, new Card(7,Card.Color.GREEN));
-    */
+        */
     }
 
 
