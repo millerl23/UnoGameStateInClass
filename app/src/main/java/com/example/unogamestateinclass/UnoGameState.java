@@ -78,7 +78,8 @@ public class UnoGameState {
         fromStack.remove(from);
     }
 
-
+    private void initializePlayerHands()
+    {
         if(drawDeck.size() >= 7 * playerHands.size())
         {
             for(int i=0; i < 7; i++)
