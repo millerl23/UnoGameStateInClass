@@ -19,25 +19,32 @@ public class UnoGameState
     private ArrayList<Card> playedCards;
     private ArrayList<Card> drawDeck;
 
-    private ArrayList<Card> hand0;
-    private ArrayList<Card> hand1;
-    private ArrayList<Card> hand2;
-    private ArrayList<Card> hand3;
+    private ArrayList<Card> player1;
+    private ArrayList<Card> player2;
+    private ArrayList<Card> player3;
+    private ArrayList<Card> player4;
 
     private TextView gameText;
 
     public UnoGameState(TextView _gameText) {
         // Initialize
         gameText = _gameText;
-      /*  turn = 0;
+      //  turn = 0;
         direction = PlayDirection.CW;
-        drawDeck = generateDeck();
-        playedCards = new ArrayList<Card>();
 
-        playerHands.add(0, hand0);
-        playerHands.add(1, hand1);
-        playerHands.add(2, hand2);
-        playerHands.add(3, hand3);
+        drawDeck = generateDeck();;
+        playedCards = new ArrayList<Card>();
+        playerHands = new ArrayList<ArrayList<Card>>();
+
+        player1 = new ArrayList<Card>();
+        player2 = new ArrayList<Card>();
+        player3 = new ArrayList<Card>();
+        player4 = new ArrayList<Card>();
+
+        playerHands.add(0, player1);
+        playerHands.add(1, player2);
+        playerHands.add(2, player3);
+        playerHands.add(3, player4);
 
         Collections.shuffle(drawDeck);
 
