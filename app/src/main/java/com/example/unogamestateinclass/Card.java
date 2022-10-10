@@ -35,6 +35,19 @@ public class Card {
 */
 
     }
+
+    public Color getColor() {
+        return color;
+    }
+
+    // this is used for wild and draw four cards.
+    public void setColor(Color newColor) {
+        color = newColor;
+    }
+
+    public Face getFace() {
+        return face;
+    }
 /*
     public enum CardType
     {

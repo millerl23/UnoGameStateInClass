@@ -124,10 +124,10 @@ public class UnoGameState
     {
         CW (1), CCW (-1);
 
-        private int direction;
+        private int value;
 
-        PlayDirection(int direction) {
-            this.direction = direction;
+        PlayDirection(int value) {
+            this.value = value;
         }
     }
     // for each player
@@ -141,17 +141,94 @@ public class UnoGameState
         // Shuffle Deck
         //
 
-    public void placeCard(int playerID, Card card)
+
+    public boolean checkCardValidity(Card card) {
+
+        if (card.getFace() == Card.Face.WILD || card.getFace() == Card.Face.DRAWFOUR) {
+            return true;
+        }
+
+        Card playedCardsTop = playedCards.get(0);
+
+        if (playedCardsTop.getFace() == card.getFace() ||
+            playedCardsTop.getColor() == card.getColor()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Checks card validity. If valid, removes card from player hand,
+     * executes special card functionalities, places card into placedCards,
+     * then increments turn.
+     *
+     * @param playerID index of player whose placing card
+     * @param card the actual card object being placed
+     *
+     * @return true if card is valid, false otherwise
+     */
+    public boolean placeCard(int playerID, Card card)
     {
-        // get top card of played cards
+        boolean cardValidity = checkCardValidity(card);
+        if (!cardValidity) {
+            return false;
+            // ends function, rest of code doesn't run
+        }
 
+        playerHands.get(playerID).remove(card);
 
+        int nextPlayerID;
 
-        // remove card from player's hand
+        switch (card.getFace()) {
 
+            case SKIP:
+                turn += direction.value;
+                turn %= playerHands.size();
+                break;
 
-        // add to top of played cards
+            case REVERSE:
+                if (direction == PlayDirection.CCW) {
+                    direction = PlayDirection.CW;
+                } else {
+                    direction = PlayDirection.CCW;
+                }
 
+                break;
+
+            case DRAWTWO:
+                nextPlayerID = (playerID + 1) % playerHands.size();
+                drawCardFromDeck(playerHands.get(nextPlayerID), 2);
+
+                turn += direction.value;
+                turn %= playerHands.size();
+                break;
+
+            case DRAWFOUR:
+                nextPlayerID = (playerID + 1) % playerHands.size();
+                drawCardFromDeck(playerHands.get(nextPlayerID), 4);
+
+                turn += direction.value;
+                turn %= playerHands.size();
+
+                // can change this based on demonstration
+                card.setColor(Card.Color.BLUE);
+                break;
+
+            case WILD:
+
+                // same thing here
+                card.setColor(Card.Color.BLUE);
+                break;
+        }
+
+        playedCards.add(card);
+
+        turn += direction.value;
+        turn %= playerHands.size();
+
+        return true;
     }
 
     @Override
