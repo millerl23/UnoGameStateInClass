@@ -56,8 +56,7 @@ public class Card {
 */
     @Override
     public String toString(){
-        String rtrn = new String();
-        rtrn = this.color + " " + this.face;
+        String rtrn = this.color + " " + this.face;
         return rtrn;
     }
 }
