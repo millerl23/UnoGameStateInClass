@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -58,6 +59,61 @@ public class UnoGameState
         playerHands.get(0).add(0, new Card(6,Card.Color.YELLOW));
         playerHands.get(0).add(0, new Card(7,Card.Color.GREEN));
         */
+    }
+
+    public UnoGameState(UnoGameState previous)
+    {
+        gameText = previous.gameText;
+        turn = previous.turn;
+        direction = previous.direction;
+        drawDeck = new ArrayList<Card>();
+        for(Card c : previous.drawDeck)
+        {
+            Card.Face face = c.getFace();
+            Card.Color color = c.getColor();
+            drawDeck.add(new Card(color, face));
+        }
+        playedCards = new ArrayList<Card>();
+        for(Card c : previous.playedCards)
+        {
+            Card.Face face = c.getFace();
+            Card.Color color = c.getColor();
+            playedCards.add(new Card(color, face));
+        }
+        playerHands = new ArrayList<>();
+        player1 = new ArrayList<>();
+        player2 = new ArrayList<>();
+        player3 = new ArrayList<>();
+        player4 = new ArrayList<>();
+        for(int i=0; i < previous.playerHands.size(); i++)
+        {
+            ArrayList<Card> newHand = previous.playerHands.get(i);
+
+            for (Card c : newHand)
+            {
+                Card.Face face = c.getFace();
+                Card.Color color = c.getColor();
+                switch(i){
+                    case 0:
+                        player1.add(new Card(color, face));
+                        break;
+                    case 1:
+                        player2.add(new Card(color, face));
+                        break;
+                    case 2:
+                        player3.add(new Card(color, face));
+                        break;
+                    case 3:
+                        player4.add(new Card(color, face));
+                        break;
+                }
+            }
+
+            playerHands.add(player1);
+            playerHands.add(player2);
+            playerHands.add(player3);
+            playerHands.add(player4);
+        }
     }
 
 
