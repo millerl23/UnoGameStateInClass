@@ -32,7 +32,7 @@ public class UnoGameState
       //  turn = 0;
         direction = PlayDirection.CW;
 
-        drawDeck = generateDeck();;
+        drawDeck = generateDeck();
         playedCards = new ArrayList<Card>();
         playerHands = new ArrayList<ArrayList<Card>>();
 
@@ -103,6 +103,28 @@ public class UnoGameState
                     drawCardFromDeck(playerHands.get(j), 1);
                 }
             }
+        }
+    }
+
+    public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
+        if (playerHands.size() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
+        if (drawDeck.size() == 0) {
+            for (Card c : playedCards) {
+                drawDeck.add(c);
+            }
+            Collections.shuffle(drawDeck);
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
