@@ -29,7 +29,7 @@ public class UnoGameState
     public UnoGameState(TextView _gameText) {
         // Initialize
         gameText = _gameText;
-      //  turn = 0;
+        turn = 0;
         direction = PlayDirection.CW;
 
         drawDeck = generateDeck();
@@ -242,6 +242,60 @@ public class UnoGameState
         turn %= playerHands.size();
 
         return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        String rtrn = new String("The contents of the draw deck are: ");
+        for ( Card c : this.drawDeck ) {
+            rtrn += c.toString() + ", ";
+        }
+
+        rtrn += "\nThe contents of the played cards deck are: ";
+        for ( Card c : this.playedCards){
+            rtrn += c.toString() + ", ";
+        }
+
+        rtrn += "\nThe play direction is: ";
+        switch (this.direction) {
+            case CW: rtrn += "Clockwise.\n";
+                break;
+            case CCW: rtrn += "Counterclockwise.\n";
+                break;
+            default: rtrn += "Invalid play direction detected...\n";
+        }
+
+        rtrn += "The player whose turn it is: ";
+        switch (this.turn) {
+            case 0: rtrn += "Player1\n";
+                break;
+            case 1: rtrn += "Player2\n";
+                break;
+            case 2: rtrn += "Player3\n";
+                break;
+            case 3: rtrn += "Player4\n";
+                break;
+            default: rtrn += "Invalid turn detected...\n";
+        }
+
+        for ( ArrayList<Card> hand : playerHands ){
+            switch (playerHands.indexOf(hand)){
+                case 0: rtrn += "Player1's hand consists of: ";
+                    break;
+                case 1: rtrn += "Player2's hand consists of: ";
+                    break;
+                case 2: rtrn += "Player3's hand consists of: ";
+                    break;
+                case 3: rtrn += "Player4's hand consists of: ";
+                    break;
+                default: rtrn += "Invalid player detected...\n";
+            }
+            for ( Card c : hand ){
+                rtrn += c.toString() + ", ";
+            }
+        }
+        return rtrn;
     }
 
 
