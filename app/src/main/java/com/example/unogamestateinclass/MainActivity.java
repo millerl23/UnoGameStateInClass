@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
         TextView gameText = findViewById(R.id.gameText);
         Button playButton = findViewById(R.id.playTurns);
 
-        ViewController viewController = new ViewController(gameText);
-        playButton.setOnClickListener(viewController);
+        UnoGameState unoGameState = new UnoGameState(gameText);
+        playButton.setOnClickListener(unoGameState);
 
 
     }

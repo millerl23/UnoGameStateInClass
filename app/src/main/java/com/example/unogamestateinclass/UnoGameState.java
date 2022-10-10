@@ -1,11 +1,16 @@
 package com.example.unogamestateinclass;
 
 import android.media.metrics.PlaybackErrorEvent;
+import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UnoGameState {
+public class UnoGameState
+        implements View.OnClickListener{
 
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
@@ -19,11 +24,12 @@ public class UnoGameState {
     private ArrayList<Card> hand2;
     private ArrayList<Card> hand3;
 
+    private TextView gameText;
 
-
-    public UnoGameState() {
+    public UnoGameState(TextView _gameText) {
         // Initialize
-        turn = 0;
+        gameText = _gameText;
+      /*  turn = 0;
         direction = PlayDirection.CW;
         drawDeck = generateDeck();
         playedCards = new ArrayList<Card>();
@@ -102,6 +108,12 @@ public class UnoGameState {
         to.add(nextCard);
         drawDeck.remove(nextCard);
     }
+
+    @Override
+    public void onClick(View view) {
+        gameText.setText("You pushed the button...");
+    }
+
     public enum PlayDirection
     {
         CW (1), CCW (-1);
