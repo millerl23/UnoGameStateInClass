@@ -32,8 +32,8 @@ public class UnoGameState
       //  turn = 0;
         direction = PlayDirection.CW;
 
-        drawDeck = generateDeck();;
-        playedCards = new ArrayList<Card>();
+        drawDeck = generateDeck();
+        playedCards = createPlayedCardsDeck(drawDeck);
         playerHands = new ArrayList<ArrayList<Card>>();
 
         player1 = new ArrayList<Card>();
@@ -46,7 +46,7 @@ public class UnoGameState
         playerHands.add(2, player3);
         playerHands.add(3, player4);
 
-        Collections.shuffle(drawDeck);
+        shuffleDeck(drawDeck);
 
         initializePlayerHands();
         //generateHand(playerHands.get(0));
@@ -61,6 +61,19 @@ public class UnoGameState
     }
 
 
+    private void shuffleDeck(ArrayList<Card> deck) {
+        Collections.shuffle(deck);
+    }
+
+    private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
+        Card firstCard = drawDeck.get(0);
+        drawDeck.remove(0);
+
+        ArrayList<Card> playedCardsDeck = new ArrayList<>();
+        playedCardsDeck.add(firstCard);
+
+        return playedCardsDeck;
+    }
 
     private ArrayList<Card> generateDeck() // This will actually generate a card of each type of face
     {
