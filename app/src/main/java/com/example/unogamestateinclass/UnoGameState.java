@@ -238,32 +238,34 @@ public class UnoGameState
         for ( Card c : this.drawDeck ) {
             rtrn += c.toString() + ", ";
         }
-        rtrn += "\n";
+
+        rtrn += "\nThe contents of the played cards deck are: ";
         for ( Card c : this.playedCards){
             rtrn += c.toString() + ", ";
         }
-        rtrn += "\n";
 
+        rtrn += "\nThe play direction is: ";
         switch (this.direction) {
-            case CW: rtrn += "Play direction is clockwise.\n";
+            case CW: rtrn += "Clockwise.\n";
                 break;
-            case CCW: rtrn += "Play direction is counterclockwise.\n";
+            case CCW: rtrn += "Counterclockwise.\n";
                 break;
             default: rtrn += "Invalid play direction detected...\n";
         }
+
+        rtrn += "The player whose turn it is: ";
         switch (this.turn) {
-            case 0: rtrn += "It is player1's turn.\n";
+            case 0: rtrn += "Player1\n";
                 break;
-            case 1: rtrn += "It is player2's turn.\n";
+            case 1: rtrn += "Player2\n";
                 break;
-            case 2: rtrn += "It is player3's turn.\n";
+            case 2: rtrn += "Player3\n";
                 break;
-            case 3: rtrn += "It is player4's turn.\n";
+            case 3: rtrn += "Player4\n";
                 break;
             default: rtrn += "Invalid turn detected...\n";
         }
 
-        // Print out the contents of each player's hand
         for ( ArrayList<Card> hand : playerHands ){
             switch (playerHands.indexOf(hand)){
                 case 0: rtrn += "Player1's hand consists of: ";
