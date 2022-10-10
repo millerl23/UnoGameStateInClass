@@ -4,13 +4,14 @@ import android.media.metrics.PlaybackErrorEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UnoGameState
-        implements View.OnClickListener{
+public class UnoGameState {
 
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
@@ -24,11 +25,10 @@ public class UnoGameState
     private ArrayList<Card> player3;
     private ArrayList<Card> player4;
 
-    private TextView gameText;
 
-    public UnoGameState(TextView _gameText) {
+
+    public UnoGameState() {
         // Initialize
-        gameText = _gameText;
         turn = 0;
         direction = PlayDirection.CW;
 
@@ -113,11 +113,6 @@ public class UnoGameState
             to.add(nextCard);
             drawDeck.remove(nextCard);
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        gameText.setText("You pushed the button...");
     }
 
     public enum PlayDirection
@@ -231,6 +226,7 @@ public class UnoGameState
         return true;
     }
 
+    @NonNull
     @Override
     public String toString()
     {
