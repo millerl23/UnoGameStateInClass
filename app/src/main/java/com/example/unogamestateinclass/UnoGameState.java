@@ -97,23 +97,22 @@ public class UnoGameState
 
     private void initializePlayerHands()
     {
-        if(drawDeck.size() >= 7 * playerHands.size())
-        {
-            for(int i=0; i < 7; i++)
-            {
-                for(int j=0; j < playerHands.size(); j++)
-                {
-                    drawCardFromDeck(playerHands.get(j));
+        if(drawDeck.size() >= 7 * playerHands.size()) {
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < playerHands.size(); j++) {
+                    drawCardFromDeck(playerHands.get(j), 1);
                 }
             }
         }
     }
 
-    private void drawCardFromDeck(ArrayList<Card> to)
+    private void drawCardFromDeck(ArrayList<Card> to, int n)
     {
-        Card nextCard = drawDeck.get(0);
-        to.add(nextCard);
-        drawDeck.remove(nextCard);
+        for (int i = 0; i < n; n++) {
+            Card nextCard = drawDeck.get(0);
+            to.add(nextCard);
+            drawDeck.remove(nextCard);
+        }
     }
 
     @Override
