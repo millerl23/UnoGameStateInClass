@@ -4,6 +4,8 @@ import android.media.metrics.PlaybackErrorEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -24,16 +26,15 @@ public class UnoGameState
     private ArrayList<Card> player3;
     private ArrayList<Card> player4;
 
-    private TextView gameText;
 
-    public UnoGameState(TextView _gameText) {
+
+    public UnoGameState() {
         // Initialize
-        gameText = _gameText;
-      //  turn = 0;
+        turn = 0;
         direction = PlayDirection.CW;
 
         drawDeck = generateDeck();
-        playedCards = new ArrayList<Card>();
+        playedCards = createPlayedCardsDeck(drawDeck);
         playerHands = new ArrayList<ArrayList<Card>>();
 
         player1 = new ArrayList<Card>();
@@ -46,7 +47,7 @@ public class UnoGameState
         playerHands.add(2, player3);
         playerHands.add(3, player4);
 
-        Collections.shuffle(drawDeck);
+        shuffleDeck(drawDeck);
 
         initializePlayerHands();
         //generateHand(playerHands.get(0));
@@ -61,6 +62,19 @@ public class UnoGameState
     }
 
 
+    private void shuffleDeck(ArrayList<Card> deck) {
+        Collections.shuffle(deck);
+    }
+
+    private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
+        Card firstCard = drawDeck.get(0);
+        drawDeck.remove(0);
+
+        ArrayList<Card> playedCardsDeck = new ArrayList<>();
+        playedCardsDeck.add(firstCard);
+
+        return playedCardsDeck;
+    }
 
     private ArrayList<Card> generateDeck() // This will actually generate a card of each type of face
     {
@@ -137,10 +151,6 @@ public class UnoGameState
         }
     }
 
-    @Override
-    public void onClick(View view) {
-        gameText.setText("You pushed the button...");
-    }
 
     public enum PlayDirection
     {
@@ -222,11 +232,17 @@ public class UnoGameState
             case DRAWTWO:
                 nextPlayerID = (playerID + 1) % playerHands.size();
                 drawCardFromDeck(playerHands.get(nextPlayerID), 2);
+
+                turn += direction.value;
+                turn %= playerHands.size();
                 break;
 
             case DRAWFOUR:
                 nextPlayerID = (playerID + 1) % playerHands.size();
                 drawCardFromDeck(playerHands.get(nextPlayerID), 4);
+
+                turn += direction.value;
+                turn %= playerHands.size();
 
                 // can change this based on demonstration
                 card.setColor(Card.Color.BLUE);
@@ -245,6 +261,61 @@ public class UnoGameState
         turn %= playerHands.size();
 
         return true;
+    }
+
+    @NonNull
+    @Override
+    public String toString()
+    {
+        String rtrn = new String("The contents of the draw deck are: ");
+        for ( Card c : this.drawDeck ) {
+            rtrn += c.toString() + ", ";
+        }
+
+        rtrn += "\nThe contents of the played cards deck are: ";
+        for ( Card c : this.playedCards){
+            rtrn += c.toString() + ", ";
+        }
+
+        rtrn += "\nThe play direction is: ";
+        switch (this.direction) {
+            case CW: rtrn += "Clockwise.\n";
+                break;
+            case CCW: rtrn += "Counterclockwise.\n";
+                break;
+            default: rtrn += "Invalid play direction detected...\n";
+        }
+
+        rtrn += "The player whose turn it is: ";
+        switch (this.turn) {
+            case 0: rtrn += "Player1\n";
+                break;
+            case 1: rtrn += "Player2\n";
+                break;
+            case 2: rtrn += "Player3\n";
+                break;
+            case 3: rtrn += "Player4\n";
+                break;
+            default: rtrn += "Invalid turn detected...\n";
+        }
+
+        for ( ArrayList<Card> hand : playerHands ){
+            switch (playerHands.indexOf(hand)){
+                case 0: rtrn += "Player1's hand consists of: ";
+                    break;
+                case 1: rtrn += "Player2's hand consists of: ";
+                    break;
+                case 2: rtrn += "Player3's hand consists of: ";
+                    break;
+                case 3: rtrn += "Player4's hand consists of: ";
+                    break;
+                default: rtrn += "Invalid player detected...\n";
+            }
+            for ( Card c : hand ){
+                rtrn += c.toString() + ", ";
+            }
+        }
+        return rtrn;
     }
 
 
