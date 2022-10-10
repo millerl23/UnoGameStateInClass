@@ -11,7 +11,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UnoGameState {
+public class UnoGameState
+        implements View.OnClickListener{
 
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
@@ -119,6 +120,28 @@ public class UnoGameState {
         }
     }
 
+    public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
+        if (playerHands.size() == 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
+        if (drawDeck.size() == 0) {
+            for (Card c : playedCards) {
+                drawDeck.add(c);
+            }
+            Collections.shuffle(drawDeck);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private void drawCardFromDeck(ArrayList<Card> to, int n)
     {
         for (int i = 0; i < n; n++) {
@@ -127,6 +150,7 @@ public class UnoGameState {
             drawDeck.remove(nextCard);
         }
     }
+
 
     public enum PlayDirection
     {
