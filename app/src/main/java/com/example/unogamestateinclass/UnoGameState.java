@@ -12,8 +12,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class UnoGameState
-        implements View.OnClickListener{
+public class UnoGameState {
 
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
@@ -27,6 +26,7 @@ public class UnoGameState
     private ArrayList<Card> player3;
     private ArrayList<Card> player4;
 
+    private String latestAction;
 
 
     public UnoGameState() {
@@ -51,6 +51,9 @@ public class UnoGameState
         shuffleDeck(drawDeck);
 
         initializePlayerHands();
+
+        latestAction = "The game state was initialized. Player hands were randomly generated from shuffled deck.\n";
+
         //generateHand(playerHands.get(0));
         /* playerHands.get(0).add(0, new Card(0,Card.Color.RED));
         playerHands.get(0).add(0, new Card(5,Card.Color.BLUE));
@@ -64,7 +67,6 @@ public class UnoGameState
 
     public UnoGameState(UnoGameState previous)
     {
-        gameText = previous.gameText;
         turn = previous.turn;
         direction = previous.direction;
         drawDeck = new ArrayList<Card>();
@@ -115,6 +117,7 @@ public class UnoGameState
             playerHands.add(player3);
             playerHands.add(player4);
         }
+        latestAction = "The game state was copied from copy constructor.\n";
     }
 
 
@@ -124,10 +127,9 @@ public class UnoGameState
 
     private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
         Card firstCard = drawDeck.get(0);
-        drawDeck.remove(0);
-
         ArrayList<Card> playedCardsDeck = new ArrayList<>();
         playedCardsDeck.add(firstCard);
+        drawDeck.remove(0);
 
         return playedCardsDeck;
     }
@@ -144,11 +146,10 @@ public class UnoGameState
                         }
                     }
                 }
-                else {
+                else
+                {
                     cards.add(new Card(c, f));
-                    if ( f!= Card.Face.ZERO){
-                        cards.add(new Card(c, f));
-                    }
+                    if (f != Card.Face.ZERO) cards.add(new Card(c, f));
                 }
             }
         }
@@ -165,15 +166,17 @@ public class UnoGameState
         fromStack.remove(from);
     }
 
-    private void initializePlayerHands()
+    private boolean initializePlayerHands()
     {
         if(drawDeck.size() >= 7 * playerHands.size()) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < playerHands.size(); j++) {
                     drawCardFromDeck(playerHands.get(j), 1);
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
@@ -187,9 +190,7 @@ public class UnoGameState
 
     public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
         if (drawDeck.size() == 0) {
-            for (Card c : playedCards) {
-                drawDeck.add(c);
-            }
+            drawDeck.addAll(playedCards);
             Collections.shuffle(drawDeck);
             return true;
         }
@@ -238,6 +239,10 @@ public class UnoGameState
 
         Card playedCardsTop = playedCards.get(0);
 
+        if (playedCardsTop == null)
+        {
+            return false;
+        }
         if (playedCardsTop.getFace() == card.getFace() ||
             playedCardsTop.getColor() == card.getColor()) {
             return true;
@@ -261,15 +266,17 @@ public class UnoGameState
     {
         boolean cardValidity = checkCardValidity(card);
         if (!cardValidity) {
+            latestAction = "Placed card was not valid!\n";
             return false;
             // ends function, rest of code doesn't run
         }
 
-        playerHands.get(playerID).remove(card);
+
 
         int nextPlayerID;
+        Card.Face face = card.getFace();
 
-        switch (card.getFace()) {
+        switch (face) {
 
             case SKIP:
                 turn += direction.value;
@@ -286,7 +293,7 @@ public class UnoGameState
                 break;
 
             case DRAWTWO:
-                nextPlayerID = (playerID + 1) % playerHands.size();
+                nextPlayerID = turn + direction.value;
                 drawCardFromDeck(playerHands.get(nextPlayerID), 2);
 
                 turn += direction.value;
@@ -311,11 +318,19 @@ public class UnoGameState
                 break;
         }
 
+        Card.Color color = card.getColor(); // we don't get color until here (for latestAction print)
+                                            // because it may have changed during special action execution
         playedCards.add(card);
+        playerHands.get(playerID).remove(card);
 
         turn += direction.value;
         turn %= playerHands.size();
 
+        // Player's numerical value (1-4) is different from their ID's numerical value.
+        // Maybe amend this by making player #0 null so that player 1's player id = 1?
+        // Otherwise, any time we refer to a player id, we add one to translate that to what the frontfacing view knows as the player values,
+        // hence why we do playerId + 1 and turn + 1.
+        latestAction = "Player " + String.valueOf(playerID + 1) + " played card " + card.toString() + ". Turn goes to player " + String.valueOf(turn + 1);
         return true;
     }
 
@@ -371,10 +386,22 @@ public class UnoGameState
                 rtrn += c.toString() + ", ";
             }
         }
+
+        rtrn += "\n-----------------------\n";
+        rtrn += latestAction;
         return rtrn;
     }
 
+    public ArrayList<Card> fetchPlayerHand(int id)
+    {
+        ArrayList<Card> hand = playerHands.get(id);
+        return hand;
+    }
 
+    public int fetchCurrentPlayer()
+    {
+        return turn % 4;
+    }
 
 
 }
