@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
+            android:gravity="center_horizontal"
             android:text="Press button to run example turns" />
 
         <Button

@@ -54,4 +54,9 @@ public class Card {
         INT,REVERSE,PLUS2,SKIP,WILD,PLUS4WILD
     }
 */
+    @Override
+    public String toString(){
+        String rtrn = this.color + " " + this.face;
+        return rtrn;
+    }
 }

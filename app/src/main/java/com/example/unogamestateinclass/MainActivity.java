@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,9 +18,15 @@ public class MainActivity extends AppCompatActivity {
         TextView gameText = findViewById(R.id.gameText);
         Button playButton = findViewById(R.id.playTurns);
 
-        UnoGameState unoGameState = new UnoGameState(gameText);
-        playButton.setOnClickListener(unoGameState);
+        playButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                gameText.setText("You pushed the button...");
+            }
+        });
 
 
     }
+
+
 }
+
