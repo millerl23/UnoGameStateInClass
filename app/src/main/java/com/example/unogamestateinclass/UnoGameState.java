@@ -38,17 +38,11 @@ public class UnoGameState {
         playedCards = createPlayedCardsDeck(drawDeck);
         playerHands = new ArrayList<ArrayList<Card>>();
 
-        player1 = new ArrayList<Card>();
-        player2 = new ArrayList<Card>();
-        player3 = new ArrayList<Card>();
-        player4 = new ArrayList<Card>();
+        for (int i = 0; i < 4; i++) {
+            playerHands.add(i, new ArrayList<Card>());
+        }
 
-        playerHands.add(0, player1);
-        playerHands.add(1, player2);
-        playerHands.add(2, player3);
-        playerHands.add(3, player4);
-
-        //shuffleDeck(drawDeck);
+        shuffleDeck(drawDeck);
 
         initializePlayerHands();
 
@@ -85,10 +79,12 @@ public class UnoGameState {
             playedCards.add(new Card(color, face));
         }
         playerHands = new ArrayList<>();
+
         player1 = new ArrayList<>();
         player2 = new ArrayList<>();
         player3 = new ArrayList<>();
         player4 = new ArrayList<>();
+
         for(int i=0; i < previous.playerHands.size(); i++)
         {
             ArrayList<Card> newHand = previous.playerHands.get(i);
