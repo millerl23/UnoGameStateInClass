@@ -201,7 +201,7 @@ public class UnoGameState {
 
     private void drawCardFromDeck(ArrayList<Card> to, int n)
     {
-        for (int i = 0; i < n; n++) {
+        for (int i = 0; i < n; i++) {
             Card nextCard = drawDeck.get(0);
             to.add(nextCard);
             drawDeck.remove(nextCard);

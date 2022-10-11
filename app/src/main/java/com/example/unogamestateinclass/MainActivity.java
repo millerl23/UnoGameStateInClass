@@ -3,6 +3,7 @@ package com.example.unogamestateinclass;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView gameText = findViewById(R.id.gameText);
         Button playButton = findViewById(R.id.playTurns);
+
+        gameText.setMovementMethod(new ScrollingMovementMethod());
 
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
