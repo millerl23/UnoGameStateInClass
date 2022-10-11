@@ -48,7 +48,7 @@ public class UnoGameState {
         playerHands.add(2, player3);
         playerHands.add(3, player4);
 
-        shuffleDeck(drawDeck);
+        //shuffleDeck(drawDeck);
 
         initializePlayerHands();
 
@@ -113,10 +113,10 @@ public class UnoGameState {
                 }
             }
 
-            playerHands.add(player1);
-            playerHands.add(player2);
-            playerHands.add(player3);
-            playerHands.add(player4);
+            playerHands.add(0, player1);
+            playerHands.add(1, player2);
+            playerHands.add(2, player3);
+            playerHands.add(3, player4);
         }
         latestAction = "The game state was copied from copy constructor.\n";
         instanceName = _instanceName;
@@ -148,7 +148,7 @@ public class UnoGameState {
                         }
                     }
                 }
-                else
+                else if (f != Card.Face.WILD && f != Card.Face.DRAWFOUR)
                 {
                     cards.add(new Card(c, f));
                     if (f != Card.Face.ZERO) cards.add(new Card(c, f));
@@ -174,9 +174,9 @@ public class UnoGameState {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < playerHands.size(); j++) {
                     drawCardFromDeck(playerHands.get(j), 1);
-                    return true;
                 }
             }
+            return true;
         }
         return false;
     }
@@ -346,6 +346,8 @@ public class UnoGameState {
             rtrn += c.toString() + ", ";
         }
 
+        rtrn += latestAction + "\n";
+
         rtrn += "\nThe contents of the played cards deck are: ";
         for ( Card c : this.playedCards){
             rtrn += c.toString() + ", ";
@@ -360,7 +362,7 @@ public class UnoGameState {
             default: rtrn += "Invalid play direction detected...\n";
         }
 
-        rtrn += "The player whose turn it is: ";
+        rtrn += "The player whose turn it is next: ";
         switch (this.turn) {
             case 0: rtrn += "Player1\n";
                 break;
@@ -388,10 +390,10 @@ public class UnoGameState {
             for ( Card c : hand ){
                 rtrn += c.toString() + ", ";
             }
+            rtrn += "\n";
         }
 
-        rtrn += "\n-----------------------\n";
-        rtrn += latestAction;
+        rtrn += "----------Next Turn----------\n";
         return rtrn;
     }
 
