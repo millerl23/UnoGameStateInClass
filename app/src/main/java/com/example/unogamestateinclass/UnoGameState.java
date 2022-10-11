@@ -293,19 +293,17 @@ public class UnoGameState {
                 break;
 
             case DRAWTWO:
-                nextPlayerID = turn + direction.value;
-                drawCardFromDeck(playerHands.get(nextPlayerID), 2);
-
                 turn += direction.value;
                 turn %= playerHands.size();
+
+                drawCardFromDeck(playerHands.get(turn), 2);
                 break;
 
             case DRAWFOUR:
-                nextPlayerID = (playerID + 1) % playerHands.size();
-                drawCardFromDeck(playerHands.get(nextPlayerID), 4);
-
                 turn += direction.value;
                 turn %= playerHands.size();
+
+                drawCardFromDeck(playerHands.get(turn), 4);
 
                 // can change this based on demonstration
                 card.setColor(Card.Color.BLUE);
