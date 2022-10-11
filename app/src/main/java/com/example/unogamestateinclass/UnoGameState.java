@@ -52,17 +52,8 @@ public class UnoGameState {
 
         initializePlayerHands();
 
-        latestAction = "The game state was initialized. Player hands were randomly generated from shuffled deck.\n";
+        latestAction = "The game state was initialized. Player hands were randomly generated from shuffled deck.";
 
-        //generateHand(playerHands.get(0));
-        /* playerHands.get(0).add(0, new Card(0,Card.Color.RED));
-        playerHands.get(0).add(0, new Card(5,Card.Color.BLUE));
-        playerHands.get(0).add(0, new Card(10,Card.Color.GREEN));
-        playerHands.get(0).add(0, new Card(11,Card.Color.RED));
-        playerHands.get(0).add(0, new Card(14,Card.Color.BLACK));
-        playerHands.get(0).add(0, new Card(6,Card.Color.YELLOW));
-        playerHands.get(0).add(0, new Card(7,Card.Color.GREEN));
-        */
     }
 
     public UnoGameState(UnoGameState previous)
@@ -112,11 +103,13 @@ public class UnoGameState {
                 }
             }
 
-            playerHands.add(0, player1);
-            playerHands.add(1, player2);
-            playerHands.add(2, player3);
-            playerHands.add(3, player4);
+
         }
+        playerHands.add(0, player1);
+        playerHands.add(1, player2);
+        playerHands.add(2, player3);
+        playerHands.add(3, player4);
+
         latestAction = "The game state was copied from copy constructor.\n";
     }
 
@@ -336,60 +329,64 @@ public class UnoGameState {
     @Override
     public String toString()
     {
-        String rtrn = new String("The contents of the draw deck are: ");
+        StringBuilder rtrn = new StringBuilder(new String("The contents of the draw deck are: "));
         for ( Card c : this.drawDeck ) {
-            rtrn += c.toString() + ", ";
+            if(c != drawDeck.get(drawDeck.size()-1))
+            {
+                rtrn.append(c.toString()).append(", ");
+            } else rtrn.append(c.toString()).append(".\n");
+
         }
 
-        rtrn += latestAction + "\n";
+        rtrn.append("\n").append(latestAction).append("\n\n");
 
-        rtrn += "\nThe contents of the played cards deck are: ";
+        rtrn.append("The contents of the played cards deck are:");
         for ( Card c : this.playedCards){
-            rtrn += c.toString() + ", ";
+            rtrn.append(c.toString()).append(", ");
         }
 
-        rtrn += "\nThe play direction is: ";
+        rtrn.append("\nThe play direction is:");
         switch (this.direction) {
-            case CW: rtrn += "Clockwise.\n";
+            case CW: rtrn.append("Clockwise.\n");
                 break;
-            case CCW: rtrn += "Counterclockwise.\n";
+            case CCW: rtrn.append("Counterclockwise.\n");
                 break;
-            default: rtrn += "Invalid play direction detected...\n";
+            default: rtrn.append("Invalid play direction detected...\n");
         }
 
-        rtrn += "The player whose turn it is next: ";
+        rtrn.append("The player whose turn it is next: ");
         switch (this.turn) {
-            case 0: rtrn += "Player1\n";
+            case 0: rtrn.append("Player1\n");
                 break;
-            case 1: rtrn += "Player2\n";
+            case 1: rtrn.append("Player2\n");
                 break;
-            case 2: rtrn += "Player3\n";
+            case 2: rtrn.append("Player3\n");
                 break;
-            case 3: rtrn += "Player4\n";
+            case 3: rtrn.append("Player4\n");
                 break;
-            default: rtrn += "Invalid turn detected...\n";
+            default: rtrn.append("Invalid turn detected...\n");
         }
 
         for ( ArrayList<Card> hand : playerHands ){
             switch (playerHands.indexOf(hand)){
-                case 0: rtrn += "Player1's hand consists of: ";
+                case 0: rtrn.append("Player1's hand consists of: ");
                     break;
-                case 1: rtrn += "Player2's hand consists of: ";
+                case 1: rtrn.append("Player2's hand consists of: ");
                     break;
-                case 2: rtrn += "Player3's hand consists of: ";
+                case 2: rtrn.append("Player3's hand consists of: ");
                     break;
-                case 3: rtrn += "Player4's hand consists of: ";
+                case 3: rtrn.append("Player4's hand consists of: ");
                     break;
-                default: rtrn += "Invalid player detected...\n";
+                default: rtrn.append("Invalid player detected...\n");
             }
             for ( Card c : hand ){
-                rtrn += c.toString() + ", ";
+                rtrn.append(c.toString()).append(", ");
             }
-            rtrn += "\n";
+            rtrn.append("\n");
         }
 
-        rtrn += "----------Next Turn----------\n";
-        return rtrn;
+        rtrn.append("----------Next Turn----------\n");
+        return rtrn.toString();
     }
 
     public ArrayList<Card> fetchPlayerHand(int id)
