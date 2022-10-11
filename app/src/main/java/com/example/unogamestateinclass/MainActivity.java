@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
                 UnoGameState thirdInstance = new UnoGameState(firstInstance);
 
                 gameText.append(firstInstance.toString());
+                v.invalidate();
 
                 //Delays next move for 1 second to see separation of moves
                 try {
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 gameText.append(firstInstance.toString());
+                v.invalidate();
 
                 //Delays next move for 1 second to see separation of moves
                 try {
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 gameText.append(firstInstance.toString());
+                v.invalidate();
 
                 //Delays next move for 1 second to see separation of moves
                 try {
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 gameText.append(firstInstance.toString());
+                v.invalidate();
 
                 try {
                     TimeUnit.SECONDS.sleep(1);
