@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 UnoGameState firstInstance = new UnoGameState();
-                UnoGameState secondInstance = new UnoGameState(firstInstance);
-                UnoGameState thirdInstance = new UnoGameState(firstInstance);
+                UnoGameState secondInstance = new UnoGameState(firstInstance, "Second Instance");
+                UnoGameState thirdInstance = new UnoGameState(firstInstance, "Third Instance");
 
                 gameText.append(firstInstance.toString());
 
