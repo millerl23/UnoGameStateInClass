@@ -27,7 +27,7 @@ public class UnoGameState {
     private ArrayList<Card> player4;
 
     private String latestAction;
-
+    private String instanceName;
 
     public UnoGameState() {
         // Initialize
@@ -51,12 +51,13 @@ public class UnoGameState {
         //shuffleDeck(drawDeck);
 
         initializePlayerHands();
-
+        
+        instanceName = "First Instance";
         latestAction = "The game state was initialized. Player hands were randomly generated from shuffled deck.";
 
     }
 
-    public UnoGameState(UnoGameState previous)
+    public UnoGameState(UnoGameState previous, String _instanceName)
     {
         turn = previous.turn;
         direction = previous.direction;
@@ -111,6 +112,7 @@ public class UnoGameState {
         playerHands.add(3, player4);
 
         latestAction = "The game state was copied from copy constructor.\n";
+        instanceName = _instanceName;
     }
 
 
@@ -329,7 +331,8 @@ public class UnoGameState {
     @Override
     public String toString()
     {
-        StringBuilder rtrn = new StringBuilder(new String("The contents of the draw deck are: "));
+        StringBuilder rtrn = new StringBuilder(new String("\nThis is the " + instanceName) + "The contents of the draw deck are: ");
+
         for ( Card c : this.drawDeck ) {
             if(c != drawDeck.get(drawDeck.size()-1))
             {

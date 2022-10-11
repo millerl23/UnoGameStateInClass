@@ -20,13 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Runnable textUpdate = new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        };
-
         TextView gameText = findViewById(R.id.gameText);
         Button playButton = findViewById(R.id.playTurns);
 
@@ -85,9 +78,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 }
 
