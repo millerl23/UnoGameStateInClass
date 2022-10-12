@@ -28,18 +28,10 @@ public class MainActivity extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 UnoGameState firstInstance = new UnoGameState();
-                UnoGameState secondInstance = new UnoGameState(firstInstance, "Second Instance");
-                UnoGameState thirdInstance = new UnoGameState(firstInstance, "Third Instance");
+                UnoGameState secondInstance = new UnoGameState(firstInstance);
 
-                gameText.append(firstInstance.toString());
-                v.invalidate();
 
-                //Delays next move for 1 second to see separation of moves
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Ends current thread if interruptedexception
-                }
+                gameText.setText(firstInstance.toString());
 
                 ArrayList<Card> firstPlayerHand = firstInstance.fetchPlayerHand(0);
                 for(Card c : firstPlayerHand)
@@ -53,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 gameText.append(firstInstance.toString());
-                v.invalidate();
-
-                //Delays next move for 1 second to see separation of moves
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Ends current thread if interruptedexception
-                }
 
                 int nextPlayerId = firstInstance.fetchCurrentPlayer();
                 ArrayList<Card> nextPlayerHand = firstInstance.fetchPlayerHand(nextPlayerId);
@@ -73,14 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 gameText.append(firstInstance.toString());
-                v.invalidate();
-
-                //Delays next move for 1 second to see separation of moves
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Ends current thread if interrupted exception
-                }
 
                 nextPlayerId = firstInstance.fetchCurrentPlayer();
                 nextPlayerHand = firstInstance.fetchPlayerHand(nextPlayerId);
@@ -92,15 +68,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
+                UnoGameState thirdInstance = new UnoGameState();
+
                 gameText.append(firstInstance.toString());
-                v.invalidate();
-
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // Ends current thread if interrupted exception
-                }
-
                 gameText.append(secondInstance.toString());
                 gameText.append(thirdInstance.toString());
             }
@@ -108,7 +78,5 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 }
 
