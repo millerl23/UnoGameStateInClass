@@ -1,6 +1,7 @@
 package com.example.unogamestateinclass;
 
 import android.media.metrics.PlaybackErrorEvent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,13 +22,10 @@ public class UnoGameState {
     private ArrayList<Card> playedCards;
     private ArrayList<Card> drawDeck;
 
-    private ArrayList<Card> player1;
-    private ArrayList<Card> player2;
-    private ArrayList<Card> player3;
-    private ArrayList<Card> player4;
-
     private String latestAction;
-    private String instanceName;
+
+    private static int instanceCount = 1;
+    private int instanceNumber;
 
     public UnoGameState() {
         // Initialize
@@ -45,13 +43,19 @@ public class UnoGameState {
         shuffleDeck(drawDeck);
 
         initializePlayerHands();
-        
-        instanceName = "First Instance";
+
+        instanceNumber = instanceCount;
+        instanceCount += 1;
+        instanceCount %= 3; // resets the count when "play turn" button is clicked
+                            // multiple times
+
+        Log.i(instanceCount+"", "");
+
         latestAction = "The game state was initialized. Player hands were randomly generated from shuffled deck.";
 
     }
 
-    public UnoGameState(UnoGameState previous, String _instanceName)
+    public UnoGameState(UnoGameState previous)
     {
         turn = previous.turn;
         direction = previous.direction;
@@ -71,10 +75,9 @@ public class UnoGameState {
         }
         playerHands = new ArrayList<>();
 
-        player1 = new ArrayList<>();
-        player2 = new ArrayList<>();
-        player3 = new ArrayList<>();
-        player4 = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            playerHands.add(i, new ArrayList<Card>());
+        }
 
         for(int i=0; i < previous.playerHands.size(); i++)
         {
@@ -84,31 +87,15 @@ public class UnoGameState {
             {
                 Card.Face face = c.getFace();
                 Card.Color color = c.getColor();
-                switch(i){
-                    case 0:
-                        player1.add(new Card(color, face));
-                        break;
-                    case 1:
-                        player2.add(new Card(color, face));
-                        break;
-                    case 2:
-                        player3.add(new Card(color, face));
-                        break;
-                    case 3:
-                        player4.add(new Card(color, face));
-                        break;
-                }
+
+                playerHands.get(i).add(new Card(color, face));
             }
-
-
         }
-        playerHands.add(0, player1);
-        playerHands.add(1, player2);
-        playerHands.add(2, player3);
-        playerHands.add(3, player4);
+
+        instanceNumber = instanceCount;
+        instanceCount += 1;
 
         latestAction = "The game state was copied from copy constructor.\n";
-        instanceName = _instanceName;
     }
 
 
@@ -327,7 +314,9 @@ public class UnoGameState {
     @Override
     public String toString()
     {
-        StringBuilder rtrn = new StringBuilder(new String("\nThis is the " + instanceName) + "The contents of the draw deck are: ");
+        StringBuilder rtrn = new StringBuilder(new String(
+                "\nThis is instance #" + instanceNumber) +
+                ". The contents of the draw deck are: \n");
 
         for ( Card c : this.drawDeck ) {
             if(c != drawDeck.get(drawDeck.size()-1))
@@ -354,30 +343,13 @@ public class UnoGameState {
         }
 
         rtrn.append("The player whose turn it is next: ");
-        switch (this.turn) {
-            case 0: rtrn.append("Player1\n");
-                break;
-            case 1: rtrn.append("Player2\n");
-                break;
-            case 2: rtrn.append("Player3\n");
-                break;
-            case 3: rtrn.append("Player4\n");
-                break;
-            default: rtrn.append("Invalid turn detected...\n");
-        }
+        rtrn.append("Player").append(this.turn + 1).append("\n");
 
         for ( ArrayList<Card> hand : playerHands ){
-            switch (playerHands.indexOf(hand)){
-                case 0: rtrn.append("Player1's hand consists of: ");
-                    break;
-                case 1: rtrn.append("Player2's hand consists of: ");
-                    break;
-                case 2: rtrn.append("Player3's hand consists of: ");
-                    break;
-                case 3: rtrn.append("Player4's hand consists of: ");
-                    break;
-                default: rtrn.append("Invalid player detected...\n");
-            }
+            rtrn.append("Player");
+            rtrn.append(playerHands.indexOf(hand) + 1);
+            rtrn.append("'s hand consists of: ");
+
             for ( Card c : hand ){
                 rtrn.append(c.toString()).append(", ");
             }
