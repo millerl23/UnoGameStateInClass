@@ -14,6 +14,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/*
+ * UnoGameState class for most of our game state action controls
+ *
+ * @author Nate Hopper
+ * @author Clei Pagurigan
+ * @author Lukas Miller
+ * @author Henry Schiff
+ */
 public class UnoGameState {
 
     private int turn; //index of player whose turn it is

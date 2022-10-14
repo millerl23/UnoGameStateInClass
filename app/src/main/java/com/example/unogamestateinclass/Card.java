@@ -1,5 +1,14 @@
 package com.example.unogamestateinclass;
 
+/*
+ * Card class defines all of the qualities of the card in reference
+ * to the game state
+ *
+ * @author Nate Hopper
+ * @author Clei Pagurigan
+ * @author Lukas Miller
+ * @author Henry Schiff
+ */
 public class Card {
 
     private int cardID; // 0-9 for ints, 10 = skip, 11 = reverse,

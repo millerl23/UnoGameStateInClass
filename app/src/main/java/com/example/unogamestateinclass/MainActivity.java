@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
+/*
+ * Main Activity controller
+ *
+ * @author Nate Hopper
+ * @author Clei Pagurigan
+ * @author Lukas Miller
+ * @author Henry Schiff
+ */
 public class MainActivity extends AppCompatActivity {
 
 
