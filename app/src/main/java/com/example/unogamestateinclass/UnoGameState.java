@@ -112,7 +112,9 @@ public class UnoGameState {
         return playedCardsDeck;
     }
 
-    private ArrayList<Card> generateDeck() // This will actually generate a card of each type of face
+    // Generate deck of: 4 of each black card, 2 of each colored card
+    // but only 1 zero of each colored card
+    private ArrayList<Card> generateDeck()
     {
         ArrayList<Card> cards = new ArrayList<>();
         for ( Card.Color c : Card.Color.values()){
@@ -314,10 +316,12 @@ public class UnoGameState {
     @Override
     public String toString()
     {
+        // Initialize return string with instance
         StringBuilder rtrn = new StringBuilder(new String(
                 "\nThis is instance #" + instanceNumber) +
                 ". The contents of the draw deck are: \n");
 
+        // Add contents of drawDeck to return string
         for ( Card c : this.drawDeck ) {
             if(c != drawDeck.get(drawDeck.size()-1))
             {
@@ -326,13 +330,16 @@ public class UnoGameState {
 
         }
 
+        // Add latest action
         rtrn.append("\n").append(latestAction).append("\n\n");
 
+        // Add played cards
         rtrn.append("The contents of the played cards deck are:");
         for ( Card c : this.playedCards){
             rtrn.append(c.toString()).append(", ");
         }
 
+        // Add play direction
         rtrn.append("\nThe play direction is:");
         switch (this.direction) {
             case CW: rtrn.append("Clockwise.\n");
@@ -342,9 +349,11 @@ public class UnoGameState {
             default: rtrn.append("Invalid play direction detected...\n");
         }
 
+        // Add next player's turn
         rtrn.append("The player whose turn it is next: ");
         rtrn.append("Player").append(this.turn + 1).append("\n");
 
+        // Add all players' hands
         for ( ArrayList<Card> hand : playerHands ){
             rtrn.append("Player");
             rtrn.append(playerHands.indexOf(hand) + 1);
@@ -356,6 +365,7 @@ public class UnoGameState {
             rtrn.append("\n");
         }
 
+        // Occurrence separator
         rtrn.append("----------Next Turn----------\n");
         return rtrn.toString();
     }
