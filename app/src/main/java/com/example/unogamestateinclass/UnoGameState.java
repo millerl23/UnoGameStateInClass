@@ -12,6 +12,7 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class UnoGameState {
 
@@ -33,7 +34,6 @@ public class UnoGameState {
         direction = PlayDirection.CW;
 
         drawDeck = generateDeck();
-        playedCards = createPlayedCardsDeck(drawDeck);
         playerHands = new ArrayList<ArrayList<Card>>();
 
         for (int i = 0; i < 4; i++) {
@@ -41,8 +41,8 @@ public class UnoGameState {
         }
 
         shuffleDeck(drawDeck);
-
         initializePlayerHands();
+        playedCards = createPlayedCardsDeck(drawDeck);
 
         instanceNumber = instanceCount;
         instanceCount += 1;
@@ -100,7 +100,7 @@ public class UnoGameState {
 
 
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck);
+        Collections.shuffle(deck, new Random(1234));
     }
 
     private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
