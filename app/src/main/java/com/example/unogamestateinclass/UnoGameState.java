@@ -55,19 +55,27 @@ public class UnoGameState {
 
     }
 
+    /**
+     * Returns a deepcopied UnoGameState. Anything that isn't a
+     *
+     * @param previous gamestate that we're copying from
+     * @return UnoGameState deepcopied
+     */
     public UnoGameState(UnoGameState previous)
     {
         turn = previous.turn;
         direction = previous.direction;
         drawDeck = new ArrayList<Card>();
-        for(Card c : previous.drawDeck)
+                                        // Get each card in previous draw deck, make a deep copy, add to this.drawDeck.
+                                        // in the long term, making a copy constructor for cards might be smart.
+        for(Card c : previous.drawDeck) // However, in most cases, we're gonna be fine with the same card references.
         {
             Card.Face face = c.getFace();
             Card.Color color = c.getColor();
             drawDeck.add(new Card(color, face));
         }
         playedCards = new ArrayList<Card>();
-        for(Card c : previous.playedCards)
+        for(Card c : previous.playedCards) // Do the same as the last for loop but for playedcards
         {
             Card.Face face = c.getFace();
             Card.Color color = c.getColor();
@@ -75,7 +83,7 @@ public class UnoGameState {
         }
         playerHands = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) { // Add four new playerhands to playerhands arraylist
             playerHands.add(i, new ArrayList<Card>());
         }
 
@@ -83,7 +91,7 @@ public class UnoGameState {
         {
             ArrayList<Card> newHand = previous.playerHands.get(i);
 
-            for (Card c : newHand)
+            for (Card c : newHand) // for each shallow copied hand, create a corresponding deep copy
             {
                 Card.Face face = c.getFace();
                 Card.Color color = c.getColor();
@@ -100,7 +108,7 @@ public class UnoGameState {
 
 
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1234));
+        Collections.shuffle(deck, new Random(1234)); // Randomize the deck with a specific seed every time, that way we can know what cards are gonna be played on every run.
     }
 
     private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
@@ -250,8 +258,6 @@ public class UnoGameState {
             return false;
             // ends function, rest of code doesn't run
         }
-
-
 
         int nextPlayerID;
         Card.Face face = card.getFace();
